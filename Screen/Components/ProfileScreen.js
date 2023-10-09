@@ -55,7 +55,7 @@ const ProfileScreen = () => {
       </View>
 
       <View style={styles.infoContainer}>
-        <Text style={styles.label}>Departmen:</Text>
+        <Text style={styles.label}>Department:</Text>
         <Text style={styles.text}>{employeeMaster.emp_md_id}</Text>
       </View>
 
