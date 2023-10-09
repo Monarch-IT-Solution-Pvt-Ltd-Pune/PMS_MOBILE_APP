@@ -1,6 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import baseurl from '../BaseUrl/Baseurl';
 
 const ProfileScreen = () => {
 
@@ -55,12 +56,12 @@ const ProfileScreen = () => {
 
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Department :</Text>
-        <Text style={styles.text}>{employeeMaster.emp_md_id.mdNameEng}</Text>
+        <Text style={styles.text}>{employeeMaster.emp_md_id}</Text>
       </View>
 
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Designation :</Text>
-        <Text style={styles.text}>{employeeMaster.emp_mdes_id.mdes_name_eng}</Text>
+        <Text style={styles.text}>{employeeMaster.emp_mdes_id}</Text>
       </View>
 
       <View style={styles.infoContainer}>
@@ -73,20 +74,20 @@ const ProfileScreen = () => {
         <Text style={styles.text}>{employeeMaster.emp_pan_no}</Text>
       </View>
 
-      <View style={styles.infoContainer}>
+      {/* <View style={styles.infoContainer}>
         <Text style={styles.label}>Pay Matrix :</Text>
         <Text style={styles.text}>{employeeMaster.emp_mps_id.mps_range_from} - {employeeMaster.emp_mps_id.mps_range_to}</Text>
-      </View>
+      </View> */}
 
-      <View style={styles.infoContainer}>
+      {/* <View style={styles.infoContainer}>
         <Text style={styles.label}>Employee Class :</Text>
         <Text style={styles.text}>{employeeMaster.emp_mdes_id.mdes_mec_id.mec_name_eng}</Text>
-      </View>
+      </View> */}
 
-      <View style={styles.infoContainer}>
+      {/* <View style={styles.infoContainer}>
         <Text style={styles.label}>Blood Group :</Text>
         <Text style={styles.text}>{employeeMaster.emp_mbg_id.mbgNameEng}</Text>
-      </View>
+      </View> */}
 
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Mobile No. :</Text>
