@@ -50,9 +50,10 @@ const SalarySlip = () => {
   ]);
   const [month, setMonth] = useState([]);
   const [billType, setBillType] = useState([]);
+  const [showWebView, setShowWebView] = useState(false); 
 
   const handleSubmitPress = async () => {
-    
+    setShowWebView(true);
   };
   const getDataforPaySlip = async () => {
     try {
@@ -235,7 +236,14 @@ const SalarySlip = () => {
         >
             <Text style={styles.submitButtonText}>SUBMIT</Text>
         </TouchableOpacity>
-         <WebView source={{ uri: 'http://115.247.52.108:8080/PMS_UAT/employeePayslipMobile?tbd_code=${billNo}&salYear=${value}&salMonth=${value1}&billTypeKey=${billNo}&empId=8' }} style={{ flex: 1 }} />
+        {showWebView && (
+          <WebView
+            source={{
+              uri: `http://115.247.52.108:8080/PMS_UAT/employeePayslipMobile?tbd_code=${billNo}&salYear=${value}&salMonth=${value1}&billTypeKey=${billNo}&empId=8`
+            }}
+            style={{ flex: 1 }}
+          />
+        )}
       </>
     </KeyboardAvoidingView>
   );
