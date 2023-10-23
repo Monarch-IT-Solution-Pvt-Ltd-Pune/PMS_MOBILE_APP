@@ -5,7 +5,8 @@ import {Dropdown} from 'react-native-element-dropdown';
 import baseurl from '../BaseUrl/Baseurl';
 import { TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { WebView } from 'react-native-webview'
+import { WebView } from 'react-native-webview';
+import ToastManager, { Toast } from 'toastify-react-native'
 
 const SalarySlip = () => {
   const [value, setValue] = useState(null);
@@ -52,7 +53,8 @@ const SalarySlip = () => {
   const [billType, setBillType] = useState([]);
   const [showWebView, setShowWebView] = useState(false); 
 
-  const handleSubmitPress = async () => {
+  const handleSubmitPress = () => {
+    console.log("hii");
     setShowWebView(true);
   };
   const getDataforPaySlip = async () => {
@@ -109,7 +111,7 @@ const SalarySlip = () => {
         Toast.warn('No Leave available of this type');
         setValue1('')
       }else{
-        setBillNo(responseJson.billNo);
+        setBillNo(responseJson.billNo.toString());
       }
     } catch (error) {
       console.error('An error occurred:', error);
@@ -232,16 +234,16 @@ const SalarySlip = () => {
         <TouchableOpacity
             style={styles.submitButton}
             activeOpacity={0.7}
-            onPress={()=>handleSubmitPress}
+            onPress={()=>handleSubmitPress()}
         >
             <Text style={styles.submitButtonText}>SUBMIT</Text>
         </TouchableOpacity>
         {showWebView && (
           <WebView
             source={{
-              uri: `http://115.247.52.108:8080/PMS_UAT/employeePayslipMobile?tbd_code=${billNo}&salYear=${value}&salMonth=${value1}&billTypeKey=${billNo}&empId=8`
+              uri: 'http://115.247.52.108:8080/PMS_UAT/employeePayslipMobile?tbd_code=3&salYear=2023&salMonth=8&billTypeKey=1&empId=2546'
             }}
-            style={{ flex: 1 }}
+            style={styles.webview}
           />
         )}
       </>
@@ -365,6 +367,9 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+  },
+  webview: {
+    flex: 1,  // This will make the WebView fill the entire screen
   },
 });
 

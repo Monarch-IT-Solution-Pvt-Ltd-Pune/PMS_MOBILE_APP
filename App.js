@@ -77,6 +77,7 @@ const App = () => {
           name="LeaveScreen"
           component={LeaveManagement}
           options={{
+            title:'Leave Management',
             headerStyle: {
               backgroundColor: '#307ecc',
             },
@@ -87,6 +88,7 @@ const App = () => {
           name="applyLeave"
           component={LeaveForm}
           options={{
+            title:'Apply Leave',
             headerStyle: {
               backgroundColor: '#307ecc',
             },
@@ -97,6 +99,7 @@ const App = () => {
           name="LeaveHistory"
           component={LeaveHistory}
           options={{
+            title:'Leave History',
             headerStyle: {
               backgroundColor: '#307ecc',
             },
@@ -107,6 +110,7 @@ const App = () => {
           name="LeaveApproval"
           component={LeaveApprovalScreen}
           options={{
+            title:'Leave Approve',
             headerStyle: {
               backgroundColor: '#307ecc',
             },
@@ -127,6 +131,7 @@ const App = () => {
           name="ComplianceReport"
           component={ComplianceReport}
           options={{
+            title:'Compliance Report',
             headerStyle: {
               backgroundColor: '#307ecc',
             },
@@ -139,6 +144,7 @@ const App = () => {
           component={ComplianceInbox}
           options={{
             headerStyle: {
+              title:'Compliance Inbox',
               backgroundColor: '#307ecc',
             },
             headerTintColor: '#fff',
@@ -182,6 +188,7 @@ const App = () => {
           name="SalarySlip"
           component={SalarySlip}
           options={{
+            title:'Salary Slip',
             headerStyle: {
               backgroundColor: '#307ecc',
             },

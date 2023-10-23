@@ -41,6 +41,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
+    width:150,
+    height:200,
   },
   cardImage: {
     width: '100%',
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   cardText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color:'black',
   },

@@ -30,7 +30,7 @@ const LeaveForm = () => {
   const [value1, setValue1] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [balanceLeave, setBalanceLeave] = useState('');
-  const [leaveCount, setLeaveCount] = useState(0);
+  const [leaveCount, setLeaveCount] = useState();
 
   // useEffect(() => {
   //   if (fromDate && toDate) {
@@ -70,10 +70,12 @@ const LeaveForm = () => {
 
     const responseJson = await response.json();
 
-    setLoading(false);
+  //  setLoading(false);
 
     if (responseJson.SUCCESS) {
       console.log("Success");
+    }if (responseJson.msg=="EXIST") {
+      Toast.warn('There is already a leave exist of selected days');
     } else {
       console.log("error");
     }
@@ -136,7 +138,7 @@ const LeaveForm = () => {
       if(totalDaysDifference!=null){
         if(!isNaN(totalDaysDifference)){
           setBalanceLeave(balanceLeave - totalDaysDifference);
-          setLeaveCount(totalDaysDifference);
+          setLeaveCount(totalDaysDifference.toString());
         }
       }
     }
@@ -158,7 +160,7 @@ const LeaveForm = () => {
       if(totalDaysDifference!=null){
         if(!isNaN(totalDaysDifference)){
           setBalanceLeave(balanceLeave - totalDaysDifference);
-          setLeaveCount(totalDaysDifference);
+          setLeaveCount(totalDaysDifference.toString());
         }
       }
     }
