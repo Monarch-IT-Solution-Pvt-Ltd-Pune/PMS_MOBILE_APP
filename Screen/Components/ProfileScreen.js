@@ -10,9 +10,10 @@ const ProfileScreen = () => {
   }, []);
 
   const [employeeMaster,setEmployeeMaster]=useState({});
-  
+  const [loading, setLoading] = useState(false);
   const fetchEmpData=async()=>{
     const empId = await AsyncStorage.getItem('empId');
+    setLoading(true);
     try {
       const response = await fetch(
         baseurl + `/getDataforProfile/?empId=${empId}`,
@@ -29,10 +30,12 @@ const ProfileScreen = () => {
       }
 
       const responseJson = await response.json();
+      setLoading(false);
       setEmployeeMaster(responseJson.employeeMaster);
       console.log(employeeMaster);
       
     } catch (error) {
+      setLoading(false);
       console.error('An error occurred:', error);
     }
   }
@@ -50,6 +53,7 @@ const ProfileScreen = () => {
 
   return (
     <View style={styles.card}>
+    <Loader loading={loading} />
       {/* <Image
         style={styles.profileImage}
         source={{ uri: employeeMaster.profileImage }}
