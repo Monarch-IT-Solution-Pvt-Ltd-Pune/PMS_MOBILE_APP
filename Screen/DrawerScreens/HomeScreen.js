@@ -32,6 +32,12 @@ const HomeScreen = () => {
     text: "Compliance",
     url: "COMPLIANCE", // Corrected the typo in "Compliance"
   },
+  {
+    id: 5,
+    src: require('../Images/compliance.png'), // Remove "require" here
+    text: "Verify Face",
+    url: "VERIFYFACE", // Corrected the typo in "Compliance"
+  },
 ];
 
 

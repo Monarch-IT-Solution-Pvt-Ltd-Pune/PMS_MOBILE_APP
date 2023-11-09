@@ -10,12 +10,14 @@ const FancyCard=({ item })=>{
   const handleOnpress=(url)=>{
     if(url=="LEAVE"){
       navigation.navigate("LeaveScreen");
-    }else if(url=="COMPLAINCE"){
+    }else if(url=="COMPLIANCE"){
       navigation.navigate("Compliance");
     }else if(url=="PROFILE"){
       navigation.navigate("ProfileScreen");
     }else if(url=="SLIP"){
       navigation.navigate("SalarySlip");
+    }else if(url=="VERIFYFACE"){
+      navigation.navigate("VerifyFace");
     }
   }
   return (

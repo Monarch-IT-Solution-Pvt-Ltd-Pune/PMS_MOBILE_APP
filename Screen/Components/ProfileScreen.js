@@ -9,7 +9,7 @@ const ProfileScreen = () => {
     fetchEmpData();
   }, []);
 
-  const [employeeMaster,setEmployeeMaster]=useState([]);
+  const [employeeMaster,setEmployeeMaster]=useState({});
   
   const fetchEmpData=async()=>{
     const empId = await AsyncStorage.getItem('empId');
@@ -29,24 +29,35 @@ const ProfileScreen = () => {
       }
 
       const responseJson = await response.json();
-      console.log(responseJson.employeeMaster);
-      setEmployeeMaster(responseJson.employeeMaster)
+      setEmployeeMaster(responseJson.employeeMaster);
+      console.log(employeeMaster);
       
     } catch (error) {
       console.error('An error occurred:', error);
     }
   }
 
+  function convertDateToDDMMYYYY(originalDate) {
+    const date = new Date(originalDate);
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Months are 0-based, so add 1
+    const year = date.getFullYear();
+  
+    // Use template literals to format the date as "dd-mm-yyyy"
+    return `${day}-${month}-${year}`;
+  }
+  
+
   return (
     <View style={styles.card}>
-      <Image
+      {/* <Image
         style={styles.profileImage}
         source={{ uri: employeeMaster.profileImage }}
-      />
+      /> */}
 
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Employee Name :</Text>
-        <Text style={styles.text}>{employeeMaster.emp_fname_en} {employeeMaster.emp_mname_en} {employeeMaster.emp_lname_en}</Text>
+        <Text style={styles.text}>{employeeMaster.emp_fname_en} {employeeMaster.emp_lname_en}</Text>
       </View>
 
       <View style={styles.infoContainer}>
@@ -54,7 +65,7 @@ const ProfileScreen = () => {
         <Text style={styles.text}>{employeeMaster.emp_code}</Text>
       </View>
 
-      <View style={styles.infoContainer}>
+      {/* <View style={styles.infoContainer}>
         <Text style={styles.label}>Department:</Text>
         <Text style={styles.text}>{employeeMaster.emp_md_id}</Text>
       </View>
@@ -62,7 +73,7 @@ const ProfileScreen = () => {
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Designation :</Text>
         <Text style={styles.text}>{employeeMaster.emp_mdes_id}</Text>
-      </View>
+      </View> */}
 
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Aadhar No :</Text>
@@ -116,13 +127,14 @@ const ProfileScreen = () => {
 
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Joining Date :</Text>
-        <Text style={styles.text}>{employeeMaster.emp_apt_date}</Text>
+        <Text style={styles.text}>{convertDateToDDMMYYYY(employeeMaster.emp_apt_date)}</Text>
       </View>
 
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Retirement Date :</Text>
-        <Text style={styles.text}>{employeeMaster.emp_retirement_date}</Text>
+        <Text style={styles.text}>{convertDateToDDMMYYYY(employeeMaster.emp_retirement_date)}</Text>
       </View>
+
 
     </View>
   );

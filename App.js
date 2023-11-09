@@ -17,6 +17,7 @@ import ComplianceInbox from './Screen/Components/ComplianceInbox';
 import TestComponent from './Screen/Components/TestComponent';
 import ProfileScreen from './Screen/Components/ProfileScreen';
 import SalarySlip from './Screen/Components/SalarySlip';
+import VerifyFace from './Screen/Components/VerifyFace';
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Stack = createStackNavigator();
@@ -189,6 +190,18 @@ const App = () => {
           component={SalarySlip}
           options={{
             title:'Salary Slip',
+            headerStyle: {
+              backgroundColor: '#307ecc',
+            },
+            headerTintColor: '#fff',
+          }}
+        />
+
+        <Stack.Screen
+          name="VerifyFace"
+          component={VerifyFace}
+          options={{
+            title:'Verify Face',
             headerStyle: {
               backgroundColor: '#307ecc',
             },
