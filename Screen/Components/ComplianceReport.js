@@ -313,7 +313,7 @@ const ComplianceReport = () => {
           style={styles.uploadImageButton}
           onPress={() => pickImage('photo')}>
           <Text style={styles.uploadImageText}>
-           Take a photo
+          TAKE A PHOTO
           </Text>
         </TouchableOpacity>
 
@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   submitButton: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#AE275F',
     borderRadius: 25,
     paddingVertical: 12,
     marginTop: 20,
@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
     marginLeft: 30,
   },
   uploadImageButton: {
-    width: '80%',
+    width: '100%',
     height: 50,
     borderRadius: 25,
     alignItems: 'center',
@@ -417,8 +417,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: 'white', // Change the background color as desired
     alignSelf: 'center',
-    borderColor: 'black',
-    borderWidth: 1,
+    borderColor: '#AE275F',
+    borderWidth: 2,
   },
   uploadImageText: {
     color: 'black', // Change the text color as desired

@@ -19,7 +19,15 @@ const backButton = (navigation) => {
 };
 const HomeScreenStack = ({ navigation }) => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      tabBarOptions={{
+        activeTintColor: '#AE275F', // Change the active tab text color
+        inactiveTintColor: 'gray', // Change the inactive tab text color
+        style: {
+          backgroundColor: 'white', // Change the background color of the tab bar
+        },
+      }}
+    >
       <Tab.Screen name="Home" component={HomeScreen} 
        options={{
           title: 'Home', //Set Header Title
@@ -27,7 +35,7 @@ const HomeScreenStack = ({ navigation }) => {
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
           headerStyle: {
-            backgroundColor: '#307ecc', //Set Header color
+            backgroundColor: '#AE275F', //Set Header color
           },
           headerTintColor: '#fff', //Set Header text color
           headerTitleStyle: {
@@ -44,7 +52,7 @@ const HomeScreenStack = ({ navigation }) => {
           title: 'Profile', // Set Header Title
           headerLeft: () => backButton(navigation), // Back button
           headerStyle: {
-            backgroundColor: '#307ecc', // Set Header color
+            backgroundColor: '#AE275F', // Set Header color
           },
           headerTintColor: '#fff', // Set Header text color
           headerTitleStyle: {
@@ -67,7 +75,7 @@ const SettingScreenStack = ({ navigation }) => {
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
           headerStyle: {
-            backgroundColor: '#307ecc', //Set Header color
+            backgroundColor: '#AE275F', //Set Header color
           },
           headerTintColor: '#fff', //Set Header text color
           headerTitleStyle: {
@@ -84,7 +92,7 @@ const SettingScreenStack = ({ navigation }) => {
           title: 'Profile', // Set Header Title
           headerLeft: () => backButton(navigation), // Back button
           headerStyle: {
-            backgroundColor: '#307ecc', // Set Header color
+            backgroundColor: '#AE275F', // Set Header color
           },
           headerTintColor: '#fff', // Set Header text color
           headerTitleStyle: {

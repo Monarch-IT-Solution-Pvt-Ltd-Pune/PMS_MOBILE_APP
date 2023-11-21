@@ -2,6 +2,7 @@ import React, {useState,useEffect} from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import baseurl from '../BaseUrl/Baseurl';
+import Loader from './Loader';
 
 const ProfileScreen = () => {
 
@@ -61,7 +62,7 @@ const ProfileScreen = () => {
 
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Employee Name :</Text>
-        <Text style={styles.text}>{employeeMaster.emp_fname_en} {employeeMaster.emp_lname_en}</Text>
+        <Text style={styles.text}>{employeeMaster.emp_fname_en} {employeeMaster.emp_mname_en} {employeeMaster.emp_lname_en}</Text>
       </View>
 
       <View style={styles.infoContainer}>
@@ -139,7 +140,6 @@ const ProfileScreen = () => {
         <Text style={styles.text}>{convertDateToDDMMYYYY(employeeMaster.emp_retirement_date)}</Text>
       </View>
 
-
     </View>
   );
 };
@@ -147,11 +147,11 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: 'white',
-    borderRadius: 10,
+    borderRadius: 5,
     padding: 20,
     margin: 20,
     shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.2,
     shadowRadius: 2,
     elevation: 3, // For Android shadow
@@ -179,6 +179,11 @@ const styles = StyleSheet.create({
     flex: 2,
     fontSize: 16,
     color: 'black',
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    color: 'white',
+    backgroundColor: '#35359e',
   },
 });
 

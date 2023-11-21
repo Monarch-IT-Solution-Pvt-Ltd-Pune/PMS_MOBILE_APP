@@ -38,7 +38,7 @@ const Auth = () => {
         options={{
           title: 'Register', //Set Header Title
           headerStyle: {
-            backgroundColor: '#307ecc', //Set Header color
+            backgroundColor: '#AE275F', //Set Header color
           },
           headerTintColor: '#fff', //Set Header text color
           headerTitleStyle: {
@@ -80,7 +80,7 @@ const App = () => {
           options={{
             title:'Leave Management',
             headerStyle: {
-              backgroundColor: '#307ecc',
+              backgroundColor: '#AE275F',
             },
             headerTintColor: '#fff',
           }}
@@ -91,7 +91,7 @@ const App = () => {
           options={{
             title:'Apply Leave',
             headerStyle: {
-              backgroundColor: '#307ecc',
+              backgroundColor: '#AE275F',
             },
             headerTintColor: '#fff',
           }}
@@ -102,7 +102,7 @@ const App = () => {
           options={{
             title:'Leave History',
             headerStyle: {
-              backgroundColor: '#307ecc',
+              backgroundColor: '#AE275F',
             },
             headerTintColor: '#fff',
           }}
@@ -113,7 +113,7 @@ const App = () => {
           options={{
             title:'Leave Approve',
             headerStyle: {
-              backgroundColor: '#307ecc',
+              backgroundColor: '#AE275F',
             },
             headerTintColor: '#fff',
           }}
@@ -122,8 +122,9 @@ const App = () => {
           name="Compliance"
           component={Compliance}
           options={{
+            title:'Compliance',
             headerStyle: {
-              backgroundColor: '#307ecc',
+              backgroundColor: '#AE275F',
             },
             headerTintColor: '#fff',
           }}
@@ -134,7 +135,7 @@ const App = () => {
           options={{
             title:'Compliance Report',
             headerStyle: {
-              backgroundColor: '#307ecc',
+              backgroundColor: '#AE275F',
             },
             headerTintColor: '#fff',
           }}
@@ -146,7 +147,7 @@ const App = () => {
           options={{
             headerStyle: {
               title:'Compliance Inbox',
-              backgroundColor: '#307ecc',
+              backgroundColor: '#AE275F',
             },
             headerTintColor: '#fff',
           }}
@@ -157,7 +158,7 @@ const App = () => {
           component={CameraComponent}
           options={{
             headerStyle: {
-              backgroundColor: '#307ecc',
+              backgroundColor: '#AE275F',
             },
             headerTintColor: '#fff',
           }}
@@ -168,7 +169,7 @@ const App = () => {
           component={TestComponent}
           options={{
             headerStyle: {
-              backgroundColor: '#307ecc',
+              backgroundColor: '#AE275F',
             },
             headerTintColor: '#fff',
           }}
@@ -179,7 +180,7 @@ const App = () => {
           component={ProfileScreen}
           options={{
             headerStyle: {
-              backgroundColor: '#307ecc',
+              backgroundColor: '#AE275F',
             },
             headerTintColor: '#fff',
           }}
@@ -191,7 +192,7 @@ const App = () => {
           options={{
             title:'Salary Slip',
             headerStyle: {
-              backgroundColor: '#307ecc',
+              backgroundColor: '#AE275F',
             },
             headerTintColor: '#fff',
           }}
@@ -203,7 +204,7 @@ const App = () => {
           options={{
             title:'Verify Face',
             headerStyle: {
-              backgroundColor: '#307ecc',
+              backgroundColor: '#AE275F',
             },
             headerTintColor: '#fff',
           }}

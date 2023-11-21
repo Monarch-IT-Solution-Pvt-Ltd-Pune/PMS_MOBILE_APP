@@ -3,7 +3,7 @@ import {
   ActivityIndicator,
   View,
   StyleSheet,
-  Image,
+  Image,Text
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -31,6 +31,8 @@ const SplashScreen = ({navigation}) => {
         source={require('../Image/payrolimage.png')}
         style={{width: '90%', resizeMode: 'contain', margin: 30}}
       />
+      <Text style={styles.titleStyle}>Pune Municipal Corporation</Text>
+      <Text style={styles.titleStyle1}>Payroll Management System</Text>
       <ActivityIndicator
         animating={animating}
         color="#FFFFFF"
@@ -48,10 +50,20 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#307ecc',
+    backgroundColor: '#ffff',
   },
   activityIndicator: {
     alignItems: 'center',
     height: 80,
   },
+  titleStyle:{
+    color: 'black',
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  titleStyle1:{
+    color: 'black',
+    fontSize: 17,
+    fontWeight: 'bold',
+  }
 });

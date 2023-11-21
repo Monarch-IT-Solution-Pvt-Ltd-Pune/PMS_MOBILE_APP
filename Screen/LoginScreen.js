@@ -94,25 +94,25 @@ const LoginScreen = ({navigation}) => {
                 source={require('../Image/payrolimage.png')}
                 style={{
                   width: '50%',
-                  height: 100,
+                  height: 150,
                   resizeMode: 'contain',
-                  margin: 30,
+                  marginTop: 30,
+                  marginBottom: 15,
                 }}
               />
+              <Text style={styles.titleStyle}>Pune Municipal Corporation</Text>
+              <Text style={styles.titleStyle1}>Payroll Management System</Text>
             </View>
             <View style={styles.SectionStyle}>
               <TextInput
                 style={styles.inputStyle}
-                onChangeText={(userName) =>
-                  setUserName(userName)
-                }
+                onChangeText={userName => setUserName(userName)}
                 placeholder="Enter Username" //dummy@abc.com
                 placeholderTextColor="#8b9cb5"
                 autoCapitalize="none"
                 returnKeyType="next"
                 onSubmitEditing={() =>
-                  passwordInputRef.current &&
-                  passwordInputRef.current.focus()
+                  passwordInputRef.current && passwordInputRef.current.focus()
                 }
                 underlineColorAndroid="#f000"
                 blurOnSubmit={false}
@@ -121,9 +121,7 @@ const LoginScreen = ({navigation}) => {
             <View style={styles.SectionStyle}>
               <TextInput
                 style={styles.inputStyle}
-                onChangeText={(UserPassword) =>
-                  setUserPassword(UserPassword)
-                }
+                onChangeText={UserPassword => setUserPassword(UserPassword)}
                 placeholder="Enter Password" //12345
                 placeholderTextColor="#8b9cb5"
                 keyboardType="default"
@@ -136,15 +134,13 @@ const LoginScreen = ({navigation}) => {
               />
             </View>
             {errortext != '' ? (
-              <Text style={styles.errorTextStyle}>
-                {errortext}
-              </Text>
+              <Text style={styles.errorTextStyle}>{errortext}</Text>
             ) : null}
             <TouchableOpacity
               style={styles.buttonStyle}
               activeOpacity={0.5}
               onPress={handleSubmitPress}>
-              <Text style={styles.buttonTextStyle}>LOGIN</Text>
+              <Text style={styles.buttonTextStyle}>Login</Text>
             </TouchableOpacity>
             <Text
               style={styles.registerTextStyle}
@@ -163,7 +159,7 @@ const styles = StyleSheet.create({
   mainBody: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#307ecc',
+    backgroundColor: '#ffff',
     alignContent: 'center',
   },
   SectionStyle: {
@@ -175,13 +171,13 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   buttonStyle: {
-    backgroundColor: '#7DE24E',
+    backgroundColor: '#3e4095',
     borderWidth: 0,
     color: '#FFFFFF',
-    borderColor: '#7DE24E',
-    height: 40,
+    borderColor: '#3e4095',
+    height: 45,
     alignItems: 'center',
-    borderRadius: 30,
+    borderRadius: 9,
     marginLeft: 35,
     marginRight: 35,
     marginTop: 20,
@@ -190,15 +186,17 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     color: '#FFFFFF',
     paddingVertical: 10,
-    fontSize: 16,
+    fontSize: 19,
+    fontWeight: 'bold',
   },
   inputStyle: {
     flex: 1,
-    color: 'white',
+    color: 'black',
+    height: 50,
     paddingLeft: 15,
     paddingRight: 15,
     borderWidth: 1,
-    borderRadius: 30,
+    borderRadius: 10,
     borderColor: '#dadae8',
   },
   registerTextStyle: {
@@ -214,4 +212,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 14,
   },
+  titleStyle:{
+    color: 'black',
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  titleStyle1:{
+    color: 'black',
+    fontSize: 17,
+    fontWeight: 'bold',
+  }
 });

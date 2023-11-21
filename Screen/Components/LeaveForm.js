@@ -12,6 +12,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import baseurl from '../BaseUrl/Baseurl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ToastManager, { Toast } from 'toastify-react-native'
+import Loader from './Loader';
 
 const LeaveForm = () => {
   const [fromDate, setFromDate] = useState('');
@@ -31,6 +32,7 @@ const LeaveForm = () => {
   const [isFocus, setIsFocus] = useState(false);
   const [balanceLeave, setBalanceLeave] = useState('');
   const [leaveCount, setLeaveCount] = useState();
+  const [loading, setLoading] = useState(false);
 
   // useEffect(() => {
   //   if (fromDate && toDate) {
@@ -75,9 +77,9 @@ const LeaveForm = () => {
     if (responseJson.SUCCESS) {
       console.log("Success");
     }if (responseJson.msg=="EXIST") {
-      Toast.warn('There is already a leave exist of selected days');
+      alert('There is already a leave exist of selected days');
     } else {
-      console.log("error");
+      alert("Something went wrong try after some time");
     }
   };
 
@@ -85,6 +87,7 @@ const LeaveForm = () => {
     try {
       const empId = await AsyncStorage.getItem('empId');
       console.log('empId' + empId + 'leaveId' + leaveId);
+      setLoading(true);
       const response = await fetch(
         baseurl + `/fetchBalanceLeaveByLeaveType/?leaveId=${leaveId}&empId=${empId}`,
         {
@@ -100,10 +103,12 @@ const LeaveForm = () => {
       }
 
       const responseJson = await response.json();
+      setLoading(false);
       console.log(responseJson);
       if(responseJson.msg=='ERROR'){
-        Toast.warn('No Leave available of this type');
-        setValue1('')
+        alert('No Leave available of this type');
+        setValue1('');
+        setBalanceLeave(0);
       }else{
         setBalanceLeave(responseJson.balanceLeave);
       }
@@ -130,9 +135,14 @@ const LeaveForm = () => {
       setFromDate(formattedDate);
     }
     setShowFromDatePicker(false);
+    if (toDate && toDate < formattedDate) {
+      alert('To Date cannot be greater than From Date');
+      setFromDate(""); // Reset From Date
+      return;
+    }
     const totalDaysDifference = calculateDateDifference(formattedDate, toDate)+1;
     if (totalDaysDifference > balanceLeave) {
-      Toast.warn('You cant apply for more than the balance');
+      alert('You cant apply for more than the balance');
       setFromDate("");
     } else {
       if(totalDaysDifference!=null){
@@ -142,7 +152,6 @@ const LeaveForm = () => {
         }
       }
     }
-    console.warn('Total days difference:', totalDaysDifference);
   };
 
   const handleToDateChange = (event, selectedDate) => {
@@ -152,9 +161,14 @@ const LeaveForm = () => {
       setToDate(formattedDate);
     }
     setShowToDatePicker(false);
+    if (fromDate && fromDate > formattedDate) {
+      alert('To Date cannot be greater than From Date');
+      setToDate(""); // Reset From Date
+      return;
+    }
     const totalDaysDifference = calculateDateDifference(fromDate, formattedDate)+1;
     if (totalDaysDifference > balanceLeave) {
-      Toast.warn('You cant apply for more than the balance');
+      alert('You cant apply for more than the balance');
       setToDate("");
     } else {
       if(totalDaysDifference!=null){
@@ -164,7 +178,6 @@ const LeaveForm = () => {
         }
       }
     }
-    console.warn('Total days difference:', totalDaysDifference);
   };
 
   const formatDate = (date) => {
@@ -211,6 +224,7 @@ const LeaveForm = () => {
   return (
     <KeyboardAvoidingView enabled style={styles.container}>
        <ToastManager />
+       <Loader loading={loading} />
       {renderLabel()}
       <Dropdown
         style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
@@ -236,7 +250,6 @@ const LeaveForm = () => {
       />
 
       <Text style={styles.balanceText}>Balance Leave : {balanceLeave ? balanceLeave : 0}</Text>
-      <Text style={styles.halfDayText}>Half Day</Text>
       <View style={styles.checkBoxContainer}>
         <Checkbox
           status={toggleCheckBox ? 'checked' : 'unchecked'}
@@ -245,17 +258,29 @@ const LeaveForm = () => {
         <Text style={styles.checkBoxText}>Half Day</Text>
       </View>
 
-      <TouchableOpacity onPress={showFromDatepicker}>
-        <Text style={styles.dateText}>
-          From Date: {fromDate ? fromDate : 'Select Date'}
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.dateContainer}>
+        <TextInput
+          style={styles.dateStyle}
+          value={`${fromDate ? fromDate : 'Select Date'}`}
+          onFocus={showFromDatepicker}
+          editable={false}
+        />
+        <TouchableOpacity onPress={showFromDatepicker} style={styles.calendarButton}>
+          <Text>📅</Text>
+        </TouchableOpacity>
+      </View>
 
-      <TouchableOpacity onPress={showToDatepicker}>
-        <Text style={styles.dateText}>
-          To Date: {toDate ? toDate : 'Select Date'}
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.dateContainer}>
+        <TextInput
+          style={styles.dateStyle}
+          value={`${toDate ? toDate : 'Select Date'}`}
+          onFocus={showToDatepicker}
+          editable={false}
+        />
+        <TouchableOpacity onPress={showToDatepicker} style={styles.calendarButton}>
+          <Text>📅</Text>
+        </TouchableOpacity>
+      </View>
 
       <TextInput
         style={styles.inputStyle}
@@ -263,6 +288,7 @@ const LeaveForm = () => {
         placeholder="Leave count"
         placeholderTextColor="grey"
         keyboardType={'numeric'}
+        editable = {false}
         onChangeText={(leaveCount) => setLeaveCount(leaveCount)}
       />
 
@@ -339,7 +365,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   submitButton: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#AE275F',
     borderRadius: 25,
     paddingVertical: 12,
     marginTop: 20,
@@ -373,6 +399,26 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     fontSize: 17,
   },
+  dateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  calendarButton: {
+    marginLeft: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: 'gray',
+  },
+  dateStyle:{
+    marginBottom: 10,
+    color: 'black',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#dadae8',
+    width: 250,
+    padding: 10,
+  }
 });
 
 export default LeaveForm;
