@@ -86,15 +86,23 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
   },
   item: {
-    backgroundColor: '#ffff',
+   // backgroundColor: '#AE275F',
+   borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#AE275F',
+    width: 330,
     padding: 15,
     marginVertical: 8,
     marginHorizontal: 16,
-    borderRadius:10
+    borderRadius:10,
+    color: 'white',
   },
   title: {
-    color:'black',
-    fontSize: 20,
+    color:'#AE275F',
+    fontSize: 22,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    elevation: 3, // Add elevation for a shadow effect (Android)
   },
 });
 

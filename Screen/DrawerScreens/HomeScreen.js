@@ -55,15 +55,15 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
        <View style={styles.pageContainer}>
-       <FlatList
-        data={cardData}
-        renderItem={({item}) => (
-          <FancyCard item={item}/>
-        )}
-        numColumns={3}
-        keyExtractor={(item, index) => index}
-      /> 
-   </View>
+        <FlatList
+          data={cardData}
+          renderItem={({item}) => (
+            <FancyCard item={item}/>
+          )}
+          numColumns={3}
+          keyExtractor={(item, index) => index}
+        /> 
+      </View>
     </SafeAreaView>
   );
 };
@@ -71,15 +71,12 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   pageContainer: {
-    flex: 1,
-    borderWidth: 1,  // Add border to the entire page
-   // borderColor: 'black',
+    borderWidth: 1,
     borderRadius: 3,
-    marginTop:80,
-    marginRight: 1,  // Set marginRight to 0 to remove space between near two cards in one row
-    marginLeft: 1, 
+    marginRight: 1,
+    marginLeft: 1,
     backgroundColor: '#f2f2f2',
-    marginBottom:375,
+    marginBottom: 120, // Add marginBottom to give it a bottom margin
   },
   container: {
     flex: 1,

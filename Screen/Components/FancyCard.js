@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     //shadowOffset: { width: 0, height: 2 },
    // shadowOpacity: 0.8,
    // shadowRadius: 2,
-    width:115,
+    width:114,
     height:120,
     borderBottomColor: 'black',
     borderBottomWidth: 1, // Add border to the bottom
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     
   },
   cardImage: {
-    width: '45%',  // Adjust the width percentage as needed
+    width: '46%',  // Adjust the width percentage as needed
     height: 55,    // Adjust the height as needed
     alignSelf: 'center',  // Center the image
     //borderTopLeftRadius: 10,

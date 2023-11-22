@@ -7,6 +7,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { WebView } from 'react-native-webview';
 import ToastManager, { Toast } from 'toastify-react-native';
+import Loader from './Loader';
 
 
 const SalarySlip = () => {
@@ -18,6 +19,7 @@ const SalarySlip = () => {
   const [isFocus3, setIsFocus3] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [billNo, setBillNo] = useState();
+  const [loading, setLoading] = useState(false);
   const [year, setYear] = useState([
     {
       label: "2014", value: '2014',
@@ -92,6 +94,7 @@ const SalarySlip = () => {
   const fetchBillNo = async (billTypeId) => {
     try {
       const userId = await AsyncStorage.getItem('userId');
+      setLoading(true);
       const response = await fetch(
         baseurl + `/fetchBillNoMobile/?billTypeId=${billTypeId}&salYear=${value}&salMonth=${value1}&userId=${userId}`,
         {
@@ -105,10 +108,10 @@ const SalarySlip = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
+      setLoading(false);
       const responseJson = await response.json();
       if (responseJson.msg == 'ERROR') {
-        Toast.warn('Bill not available of given month or year');
+        alert('Bill not available of given month or year');
         setValue1('');
       } else {
         setBillNo(responseJson.billNo.toString());
@@ -153,6 +156,7 @@ const SalarySlip = () => {
 
   return (
     <KeyboardAvoidingView enabled style={styles.container}>
+      <Loader loading={loading} />
       {showWebView ? (
         <WebView
           source={{
@@ -166,10 +170,11 @@ const SalarySlip = () => {
         <Dropdown
           style={[styles.dropdown, isFocus1 && { borderColor: 'blue' }]
           }
-          placeholderStyle={styles.placeholderStyle}
+          placeholderStyle={styles.dropdownTextStyle}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
+          itemTextStyle={styles.dropdownTextStyle}
           data={year}
           search
           maxHeight={300}
@@ -188,10 +193,11 @@ const SalarySlip = () => {
         {renderLabel2()}
         <Dropdown
           style={[styles.dropdown, isFocus2 && { borderColor: 'blue' }]}
-          placeholderStyle={styles.placeholderStyle}
+          placeholderStyle={styles.dropdownTextStyle}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
+          itemTextStyle={styles.dropdownTextStyle}
           data={month}
           search
           maxHeight={300}
@@ -210,11 +216,12 @@ const SalarySlip = () => {
         {renderLabel3()}
         <Dropdown
           style={[styles.dropdown, isFocus3 && { borderColor: 'blue' }]}
-          placeholderStyle={styles.placeholderStyle}
+          placeholderStyle={styles.dropdownTextStyle}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
           data={billType}
+          itemTextStyle={styles.dropdownTextStyle}
           search
           maxHeight={300}
           labelField="mbt_name_eng"
@@ -336,6 +343,9 @@ const styles = StyleSheet.create({
   },
   webview: {
     flex: 1,
+  },
+  dropdownTextStyle: {
+    color: 'black', // Set the desired text color for dropdown values
   },
 });
 

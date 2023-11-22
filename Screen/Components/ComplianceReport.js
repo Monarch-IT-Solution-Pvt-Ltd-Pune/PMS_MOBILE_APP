@@ -261,10 +261,11 @@ const ComplianceReport = () => {
           {renderLabel1()}
           <Dropdown
             style={[styles.dropdown, isFocus1 && { borderColor: 'blue' }]}
-            placeholderStyle={styles.placeholderStyle}
+            placeholderStyle={styles.dropdownTextStyle}
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
+            itemTextStyle={styles.dropdownTextStyle}
             data={items}
             search
             maxHeight={300}
@@ -284,10 +285,11 @@ const ComplianceReport = () => {
           {renderLabel2()}
           <Dropdown
             style={[styles.dropdown, isFocus1 && { borderColor: 'blue' }]}
-            placeholderStyle={styles.placeholderStyle}
+            placeholderStyle={styles.dropdownTextStyle}
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
+            itemTextStyle={styles.dropdownTextStyle}
             data={items1}
             search
             maxHeight={300}
@@ -441,6 +443,9 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+  },
+  dropdownTextStyle: {
+    color: 'black', // Set the desired text color for dropdown values
   },
 });
 

@@ -14,7 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ToastManager, { Toast } from 'toastify-react-native'
 import Loader from './Loader';
 
-const LeaveForm = () => {
+const LeaveForm = ({navigation}) => {
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [items, setItems] = useState([
@@ -72,15 +72,14 @@ const LeaveForm = () => {
 
     const responseJson = await response.json();
 
-  //  setLoading(false);
+    setLoading(false);
 
-    if (responseJson.SUCCESS) {
-      console.log("Success");
-    }if (responseJson.msg=="EXIST") {
+      if(responseJson.msg=="SAVED"){
+        alert("Leave Applied successfully");
+        navigation.replace('LeaveHistory');
+      }else if(responseJson.msg=="EXIST"){
       alert('There is already a leave exist of selected days');
-    } else {
-      alert("Something went wrong try after some time");
-    }
+    } 
   };
 
   const fetchBalanceLeaves = async (leaveId) => {
@@ -228,10 +227,11 @@ const LeaveForm = () => {
       {renderLabel()}
       <Dropdown
         style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-        placeholderStyle={styles.placeholderStyle}
+        placeholderStyle={styles.dropdownTextStyle}
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
+        itemTextStyle={styles.dropdownTextStyle}
         data={items}
         search
         maxHeight={300}
@@ -349,7 +349,8 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     height: 50,
-    borderColor: 'gray',
+    borderColor: 'black',
+    color: 'black',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 8,
@@ -410,7 +411,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: 'gray',
   },
-  dateStyle:{
+  dateStyle: {
     marginBottom: 10,
     color: 'black',
     borderWidth: 1,
@@ -418,7 +419,16 @@ const styles = StyleSheet.create({
     borderColor: '#dadae8',
     width: 250,
     padding: 10,
-  }
+  },
+  inputSearchStyle: {
+    color: 'black',
+  },
+  selectedTextStyle: {
+    color: 'black',
+  },
+  dropdownTextStyle: {
+    color: 'black', // Set the desired text color for dropdown values
+  },
 });
 
 export default LeaveForm;

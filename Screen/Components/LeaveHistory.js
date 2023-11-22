@@ -6,16 +6,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import baseurl from '../BaseUrl/Baseurl';
 import { format } from 'date-fns';
 import ToastManager, { Toast } from 'toastify-react-native'
+import Loader from './Loader';
 
 const LeaveHistory = () => {
   const navigation = useNavigation();
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     fetchLeaves();
   }, []);
 
   const fetchLeaves = async () => {
     const empId = await AsyncStorage.getItem('empId');
+    setLoading(true);
     try {
       const response = await fetch(
         baseurl + `/fetchAppliedLeavesByEmpId/?empId=${empId}`,
@@ -30,7 +32,7 @@ const LeaveHistory = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
+      setLoading(false);
       const responseJson = await response.json();
       console.log(responseJson.lstEmpLeaveEntry.length);
       if(responseJson.lstEmpLeaveEntry.length<=0){
@@ -73,6 +75,7 @@ const LeaveHistory = () => {
   return (
     <View style={styles.container}>
       <ToastManager />
+      <Loader loading={loading} />
       {renderHeader()}
           <FlatList
             data={leaveData}
@@ -138,6 +141,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+  heading:{
+    color: 'black',
+    fontSize:18,
+    fontWeight: 'bold',
+  }
 });
 
 export default LeaveHistory;

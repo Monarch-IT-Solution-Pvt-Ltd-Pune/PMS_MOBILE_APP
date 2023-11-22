@@ -16,7 +16,7 @@ const Loader = (props) => {
         <View style={styles.activityIndicatorWrapper}>
           <ActivityIndicator
             animating={true}
-            color="#000000"
+            color="#AE275F"
             size="large"
             style={styles.activityIndicator}
           />
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'space-around',
-    backgroundColor: '#00000040',
+    backgroundColor: '#FFFFFF',
   },
   activityIndicatorWrapper: {
     backgroundColor: '#FFFFFF',
