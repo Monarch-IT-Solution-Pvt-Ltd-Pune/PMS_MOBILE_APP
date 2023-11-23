@@ -17,7 +17,7 @@ const FancyCard=({ item ,index })=>{
     }else if(url=="SLIP"){
       navigation.navigate("SalarySlip");
     }else if(url=="VERIFYFACE"){
-      navigation.navigate("VerifyFace");
+      navigation.navigate("TestComponent");
     }
   }
   return (

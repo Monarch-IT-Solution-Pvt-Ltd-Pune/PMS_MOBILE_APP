@@ -14,7 +14,7 @@ import Compliance from './Screen/Components/Compliance';
 import ComplianceReport from './Screen/Components/ComplianceReport';
 import CameraComponent from './Screen/Components/CameraComponent';
 import ComplianceInbox from './Screen/Components/ComplianceInbox';
-import TestComponent from './Screen/Components/TestComponent';
+//import TestComponent from './Screen/Components/TestComponent';
 import ProfileScreen from './Screen/Components/ProfileScreen';
 import SalarySlip from './Screen/Components/SalarySlip';
 import VerifyFace from './Screen/Components/VerifyFace';
@@ -164,7 +164,7 @@ const App = () => {
           }}
         />
 
-        <Stack.Screen
+        {/* <Stack.Screen
           name="TestComponent"
           component={TestComponent}
           options={{
@@ -173,7 +173,7 @@ const App = () => {
             },
             headerTintColor: '#fff',
           }}
-        />
+        /> */}
 
         <Stack.Screen
           name="ProfileScreen"

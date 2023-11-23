@@ -59,7 +59,7 @@ const LoginScreen = ({navigation}) => {
   
       setLoading(false);
   
-      if (responseJson.SUCCESS) {
+      if (responseJson.SUCCESS=="SUCCESS") {
         console.log(responseJson.users.id.toString());
         AsyncStorage.setItem("userId",responseJson.users.id.toString());
         AsyncStorage.setItem("roleId",responseJson.users.usmRomId.romId.toString());
@@ -67,7 +67,7 @@ const LoginScreen = ({navigation}) => {
         AsyncStorage.setItem("empName",responseJson.users.usm_emp_id.emp_fname_en+" "+responseJson.users.usm_emp_id.emp_lname_en);
         navigation.replace('DrawerNavigationRoutes');
         console.log(responseJson.users.usm_emp_id.emp_fname_en);
-      } else {
+      } else if(responseJson.ERROR=="Wrong Password"){
         Toast.warn('Username or password is wrong!!!');
       }
     } catch (error) {
