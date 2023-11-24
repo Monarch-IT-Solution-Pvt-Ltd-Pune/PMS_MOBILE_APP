@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity,ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity,ScrollView,Modal } from 'react-native';
 import baseurl from '../BaseUrl/Baseurl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ToastManager, { Toast } from 'toastify-react-native'
+import ToastManager, { Toast } from 'toastify-react-native';
+import PDFView from 'react-native-view-pdf';
 
 const LeaveCard = ({ tldId,employeeCode,employeeName, leaveType, fromDate, toDate, appliedLeaveCount, }) => {
     
   const [hodRemark,setHodRemark]=useState('');
   const [userId,setUserId]=useState('');
+  const [viewDocument, setViewDocument] = useState(false);
+
   useEffect(() => {
     fetchUserDetails()
   }, []);
@@ -95,6 +98,13 @@ const LeaveCard = ({ tldId,employeeCode,employeeName, leaveType, fromDate, toDat
         onChangeText={(text) => setHodRemark(text)}
       />
 
+      <TouchableOpacity
+        style={styles.viewDocumentButton}
+        onPress={() => setViewDocument(true)}
+        activeOpacity={0.7}>
+        <Text style={styles.viewDocumentButtonText}>View Document</Text>
+      </TouchableOpacity>
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.approveButton} onPress={() => onApprove(tldId, hodRemark)}>
           <Text style={styles.buttonText}>Approve</Text>
@@ -104,6 +114,26 @@ const LeaveCard = ({ tldId,employeeCode,employeeName, leaveType, fromDate, toDat
           <Text style={styles.buttonText}>Reject</Text>
         </TouchableOpacity>
       </View>
+
+      <Modal visible={viewDocument} transparent animationType="slide">
+        <View style={styles.modalContainer}>
+          <PDFView
+            fadeInDuration={250.0}
+            style={{ flex: 1 }}
+            resource={selectedDocument.uri}
+            resourceType={'url'}
+            onLoad={() => console.log(`PDF rendered from ${selectedDocument.uri}`)}
+            onError={(error) => console.log('Cannot render PDF', error)}
+          />
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => setViewDocument(false)}>
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+
     </View>
     </ScrollView>
   );
@@ -155,6 +185,36 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  viewDocumentButton: {
+    backgroundColor: '#2196F3',
+    borderRadius: 25,
+    paddingVertical: 12,
+    marginTop: 10,
+    alignItems: 'center',
+    elevation: 3,
+  },
+  viewDocumentButtonText: {
+    fontSize: 18,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  closeButton: {
+    backgroundColor: 'red',
+    borderRadius: 10,
+    padding: 10,
+    position: 'absolute',
+    top: 20,
+    right: 20,
+  },
+  closeButtonText: {
+    color: 'white',
+    fontSize: 16,
   },
 });
 

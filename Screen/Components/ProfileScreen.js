@@ -12,6 +12,8 @@ const ProfileScreen = () => {
 
   const [employeeMaster,setEmployeeMaster]=useState({});
   const [loading, setLoading] = useState(false);
+  const [basic,setBasic]=useState('');
+  const [gpay,setGpay]=useState('');
   const fetchEmpData=async()=>{
     const empId = await AsyncStorage.getItem('empId');
     setLoading(true);
@@ -33,8 +35,8 @@ const ProfileScreen = () => {
       const responseJson = await response.json();
       setLoading(false);
       setEmployeeMaster(responseJson.employeeMaster);
-      console.log(employeeMaster);
-      
+      setBasic(responseJson.basic);
+      setGpay(responseJson.gpay);
     } catch (error) {
       setLoading(false);
       console.error('An error occurred:', error);
@@ -43,13 +45,12 @@ const ProfileScreen = () => {
 
   function convertDateToDDMMYYYY(originalDate) {
     const date = new Date(originalDate);
-    const day = date.getDate();
-    const month = date.getMonth() + 1; // Months are 0-based, so add 1
+    const day = String(date.getDate()).padStart(2, '0'); // Ensures two digits with leading zero
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1; ensures two digits with leading zero
     const year = date.getFullYear();
-  
-    // Use template literals to format the date as "dd-mm-yyyy"
     return `${day}-${month}-${year}`;
-  }
+}
+
   
 
   return (
@@ -70,12 +71,12 @@ const ProfileScreen = () => {
         <Text style={styles.text}>{employeeMaster.emp_code}</Text>
       </View>
 
-      {/* <View style={styles.infoContainer}>
+      {/*<View style={styles.infoContainer}>
         <Text style={styles.label}>Department:</Text>
         <Text style={styles.text}>{employeeMaster.emp_md_id}</Text>
       </View>
 
-      <View style={styles.infoContainer}>
+       <View style={styles.infoContainer}>
         <Text style={styles.label}>Designation :</Text>
         <Text style={styles.text}>{employeeMaster.emp_mdes_id}</Text>
       </View> */}

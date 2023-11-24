@@ -246,7 +246,7 @@ const ComplianceReport = () => {
   const renderLabel2 = () => {
     if (value1 || isFocus2) {
       return (
-        <Text style={[styles.label, isFocus2 && { color: 'blue' }]}>
+        <Text style={[styles.label1, isFocus2 && { color: 'blue' }]}>
           Select IN/OUT
         </Text>
       );
@@ -347,6 +347,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     fontSize: 14,
   },
+  label1: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    color: 'black',
+    left: 22,
+    top: 70,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+  },
   dropdown: {
     height: 50,
     borderColor: 'gray',
@@ -435,6 +445,7 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     fontSize: 16,
+    color:'black',
   },
   iconStyle: {
     width: 20,

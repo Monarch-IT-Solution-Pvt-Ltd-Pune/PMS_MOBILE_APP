@@ -8,7 +8,7 @@ import ComplianceCard from './ComplianceCard';
 const ComplianceInbox = () => {
   
     useEffect(() => {
-        fetchLeavesForHod();
+        fetchComplainsForHod();
     }, []);
 
   const [complainceData, setComplainceData] = useState([]);
@@ -21,7 +21,7 @@ const ComplianceInbox = () => {
     return `${day}-${month}-${year}`;
   };
 
-  const fetchLeavesForHod = async () => {
+  const fetchComplainsForHod = async () => {
     const userId = await AsyncStorage.getItem('userId');
     try {
       const response = await fetch(baseurl + `/fetchComplains/?userId=${userId}`,
@@ -56,7 +56,7 @@ const ComplianceInbox = () => {
           employeeCode={complainceEntry.mc_emp_id.emp_code}
           employeeName={complainceEntry.mc_emp_id.emp_fname_en+" "+complainceEntry.mc_emp_id.emp_mname_en+" "+complainceEntry.mc_emp_id.emp_lname_en}
           reason={complainceEntry.mc_mr_id.mr_name_en}
-          complaindate={complainceEntry.mc_date} // Now, fromDate is already formatte
+          complaindate={formatDate(complainceEntry.mc_date)} // Now, fromDate is already formatte
         />
       ))}
     </View>

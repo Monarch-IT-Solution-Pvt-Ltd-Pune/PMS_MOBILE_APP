@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useCallback } from 'react';
 import {
   StyleSheet,
   TextInput,
@@ -13,10 +13,13 @@ import baseurl from '../BaseUrl/Baseurl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ToastManager, { Toast } from 'toastify-react-native'
 import Loader from './Loader';
+import DocumentPicker from 'react-native-document-picker';
+
 
 const LeaveForm = ({navigation}) => {
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
+  const [selectedDocument, setSelectedDocument] = useState(null);
   const [items, setItems] = useState([
     { label: 'Earned Leave', value: '1' },
     { label: 'Medical Leave', value: '2' },
@@ -49,8 +52,20 @@ const LeaveForm = ({navigation}) => {
   //   }
   // }, [fromDate, toDate, balanceLeave]);
 
+  const pickDocument = useCallback(async () => {
+    try {
+      const response = await DocumentPicker.pick({
+        presentationStyle: 'fullScreen',
+      });
+      setSelectedDocument(response);
+    } catch (err) {
+      console.warn(err);
+    }
+  }, []);
+
   const handleSubmitPress = async() => {
     const empId = await AsyncStorage.getItem('empId');
+    console.log(selectedDocument.name);
     const dataToSend = {
       empId: empId,
       tldMltId: value1,
@@ -322,10 +337,26 @@ const LeaveForm = ({navigation}) => {
       )}
 
       <TouchableOpacity
+        style={styles.documentButton}
+        onPress={pickDocument}
+        activeOpacity={0.7}>
+        <Text style={styles.documentButtonText}>Upload Document</Text>
+      </TouchableOpacity>
+
+      {selectedDocument && (
+        <View style={styles.selectedDocumentContainer}>
+          <Text style={styles.selectedDocumentText}>
+            Selected Document: {selectedDocument.type}
+          </Text>
+        </View>
+      )}
+
+
+      <TouchableOpacity
         style={styles.submitButton}
         activeOpacity={0.7}
         onPress={handleSubmitPress}>
-        <Text style={styles.submitButtonText}>SUBMIT</Text>
+        <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>
   );
@@ -428,6 +459,26 @@ const styles = StyleSheet.create({
   },
   dropdownTextStyle: {
     color: 'black', // Set the desired text color for dropdown values
+  },
+  documentButton: {
+    backgroundColor: '#4CAF50',
+    borderRadius: 25,
+    paddingVertical: 12,
+    marginTop: 20,
+    alignItems: 'center',
+    elevation: 3,
+  },
+  documentButtonText: {
+    fontSize: 18,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  selectedDocumentContainer: {
+    marginTop: 10,
+  },
+  selectedDocumentText: {
+    fontSize: 16,
+    color: 'black',
   },
 });
 

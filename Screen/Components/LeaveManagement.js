@@ -14,12 +14,12 @@ const DATA = [
   {
     id: '1',
     title: 'Apply Leave',
-    roles: [8],
+    roles: [7,8],
   },
   {
     id: '2',
     title: 'Leave History',
-    roles: [8],
+    roles: [7,8],
   },
   {
     id: '3',
