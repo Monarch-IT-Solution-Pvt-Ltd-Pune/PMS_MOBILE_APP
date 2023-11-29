@@ -17,7 +17,7 @@ const FancyCard=({ item ,index })=>{
     }else if(url=="SLIP"){
       navigation.navigate("SalarySlip");
     }else if(url=="VERIFYFACE"){
-      navigation.navigate("TestComponent");
+      navigation.navigate("Camera");
     }
   }
   return (
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     //marginRight:  0,  // Set marginRight to 0 to remove space between near two cards in one row
     //marginTop: 0, 
     //marginLeft: 0, 
-    backgroundColor: '#f2f2f2',
+    backgroundColor: 'white',
     //borderRadius: 10,
     elevation: 3,
     shadowColor: 'rgba(0,0,0,0)',
@@ -66,12 +66,10 @@ const styles = StyleSheet.create({
    // shadowRadius: 2,
     width:114,
     height:120,
-    borderBottomColor: 'black',
-    borderBottomWidth: 1, // Add border to the bottom
     borderRightColor: 'black',
     borderRightWidth: 1, // Add border to the right
     paddingTop:10,
-    
+    borderRadius:10,
   },
   cardImage: {
     width: '46%',  // Adjust the width percentage as needed

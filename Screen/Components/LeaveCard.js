@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity,ScrollView,Modal } 
 import baseurl from '../BaseUrl/Baseurl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ToastManager, { Toast } from 'toastify-react-native';
-import PDFView from 'react-native-view-pdf';
 
 const LeaveCard = ({ tldId,employeeCode,employeeName, leaveType, fromDate, toDate, appliedLeaveCount, }) => {
     
@@ -117,14 +116,14 @@ const LeaveCard = ({ tldId,employeeCode,employeeName, leaveType, fromDate, toDat
 
       <Modal visible={viewDocument} transparent animationType="slide">
         <View style={styles.modalContainer}>
-          <PDFView
+          {/* <PDFView
             fadeInDuration={250.0}
             style={{ flex: 1 }}
             resource={selectedDocument.uri}
             resourceType={'url'}
             onLoad={() => console.log(`PDF rendered from ${selectedDocument.uri}`)}
             onError={(error) => console.log('Cannot render PDF', error)}
-          />
+          /> */}
           <TouchableOpacity
             style={styles.closeButton}
             onPress={() => setViewDocument(false)}>

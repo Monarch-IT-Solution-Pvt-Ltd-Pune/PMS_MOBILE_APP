@@ -1,4 +1,4 @@
-import React, { useState,useCallback } from 'react';
+import React, { useState,useCallback,useEffect } from 'react';
 import {
   StyleSheet,
   TextInput,
@@ -20,13 +20,7 @@ const LeaveForm = ({navigation}) => {
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [selectedDocument, setSelectedDocument] = useState(null);
-  const [items, setItems] = useState([
-    { label: 'Earned Leave', value: '1' },
-    { label: 'Medical Leave', value: '2' },
-    { label: 'Casual Leave', value: '3' },
-    { label: 'Special Leave', value: '4' },
-    { label: 'Optional Leave', value: '5' },
-  ]);
+  const [items, setItems] = useState([]);
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [remark, setRemark] = useState('');
@@ -37,20 +31,9 @@ const LeaveForm = ({navigation}) => {
   const [leaveCount, setLeaveCount] = useState();
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   if (fromDate && toDate) {
-  //     const totalDaysDifference = calculateDateDifference(fromDate, toDate);
-  //     if (totalDaysDifference > balanceLeave) {
-  //       console.warn("You can't apply for more than the balance");
-  //     } else {
-  //       if (totalDaysDifference != null) {
-  //         if (!isNaN(totalDaysDifference)) {
-  //           setLeaveCount(totalDaysDifference);
-  //         }
-  //       }
-  //     }
-  //   }
-  // }, [fromDate, toDate, balanceLeave]);
+  useEffect(() => {
+          fetchLeaveTypes();      
+  }, []);
 
   const pickDocument = useCallback(async () => {
     try {
@@ -62,6 +45,32 @@ const LeaveForm = ({navigation}) => {
       console.warn(err);
     }
   }, []);
+
+  const fetchLeaveTypes = async () => {
+    try {
+      const response = await fetch(baseurl + `/fetchLeaveTypes`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const responseJson = await response.json();
+      console.log(responseJson);
+      if (responseJson.msg == 'ERROR') {
+        Toast.warn('No Leaves available');
+        setValue1('');
+      } else {
+        setItems(responseJson.leaveTypeLst);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  };
 
   const handleSubmitPress = async() => {
     const empId = await AsyncStorage.getItem('empId');
@@ -250,17 +259,17 @@ const LeaveForm = ({navigation}) => {
         data={items}
         search
         maxHeight={300}
-        labelField="label"
-        valueField="value"
+        labelField="mlt_name_eng"
+        valueField="mlt_id"
         placeholder={!isFocus ? 'Select Leave Type' : '...'}
         searchPlaceholder="Search..."
         value={value1}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={(selectedValue) => {
-          setValue1(selectedValue.value);
+          setValue1(selectedValue.mlt_id);
           setIsFocus(false);
-          fetchBalanceLeaves(selectedValue.value);
+          fetchBalanceLeaves(selectedValue.mlt_id);
         }}
       />
 

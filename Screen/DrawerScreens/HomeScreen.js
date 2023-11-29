@@ -6,6 +6,7 @@ import {
   View,
 } from 'react-native';
 import FancyCard from '../Components/FancyCard';
+import BalanceLeaves from '../Components/BalanceLeaves';
 
 const HomeScreen = () => {
   const cardData = [
@@ -62,8 +63,9 @@ const HomeScreen = () => {
           )}
           numColumns={3}
           keyExtractor={(item, index) => index}
-        /> 
+        />   
       </View>
+      <BalanceLeaves />
     </SafeAreaView>
   );
 };
@@ -71,12 +73,10 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   pageContainer: {
-    borderWidth: 1,
-    borderRadius: 3,
+    borderRadius: 10,
     marginRight: 1,
     marginLeft: 1,
-    backgroundColor: '#f2f2f2',
-    marginBottom: 120, // Add marginBottom to give it a bottom margin
+    backgroundColor: 'white',
   },
   container: {
     flex: 1,

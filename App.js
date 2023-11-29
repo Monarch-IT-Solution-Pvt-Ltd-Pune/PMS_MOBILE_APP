@@ -164,7 +164,7 @@ const App = () => {
           }}
         />
 
-        {/* <Stack.Screen
+         <Stack.Screen
           name="TestComponent"
           component={TestComponent}
           options={{
@@ -173,7 +173,7 @@ const App = () => {
             },
             headerTintColor: '#fff',
           }}
-        /> */}
+        />
 
         <Stack.Screen
           name="ProfileScreen"

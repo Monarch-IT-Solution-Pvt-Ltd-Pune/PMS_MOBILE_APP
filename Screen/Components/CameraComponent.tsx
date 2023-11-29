@@ -1,11 +1,11 @@
 import React,{useEffect, useRef,useState} from "react";
 import { ActivityIndicator,StyleSheet,TouchableOpacity,View,TextInput,PermissionsAndroid } from "react-native";
 import { Image, Text } from "react-native-elements";
-import { Camera,useCameraDevice } from "react-native-vision-camera";
+import { Camera,useCameraDevice,useFrameProcessor } from "react-native-vision-camera";
 import RNFS from "react-native-fs";
 
 const CameraComponent=()=>{
-    const device = useCameraDevice('back')
+    const device = useCameraDevice('front')
     const camera = useRef<Camera>(null)
     const [imageData,setimageData]=useState('');
     const [photoClicked,setPhotoClicked]=useState(false);
@@ -13,6 +13,11 @@ const CameraComponent=()=>{
     useEffect(()=>{
         checkPermission();
     },[]);
+
+    const frameProcessor = useFrameProcessor((frame) => {
+      'worklet';
+      console.log(frame.width);
+    }, []);
    
     const checkPermission= async ()=>{
         const newCameraPermission = await Camera.requestCameraPermission()
@@ -107,6 +112,7 @@ const CameraComponent=()=>{
             isActive={true}
             photo={true}
             orientation={'portrait'}
+            frameProcessor={frameProcessor}
             />
             <TouchableOpacity style={{width:60,height:60,borderRadius:30,backgroundColor:"red",position:'absolute',bottom:50,alignSelf:'center',alignItems:'center',alignContent:'center'}} onPress={()=>takePicture()}></TouchableOpacity>
         </View>
