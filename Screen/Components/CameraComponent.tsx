@@ -15,15 +15,24 @@ const CameraComponent=()=>{
     },[]);
 
     const frameProcessor = useFrameProcessor((frame) => {
-      'worklet';
-      console.log(frame.width);
-    }, []);
+      'worklet'
+        console.log("frame created");
+    }, [])
    
-    const checkPermission= async ()=>{
-        const newCameraPermission = await Camera.requestCameraPermission()
-        const newMicrophonePermission = await Camera.requestMicrophonePermission()
-        //console.log(newCameraPermission);
-    }
+    const checkPermission = async () => {
+      try {
+        const newCameraPermission = await Camera.requestCameraPermission();
+        const newMicrophonePermission = await Camera.requestMicrophonePermission();
+    
+        if (!newCameraPermission || !newMicrophonePermission) {
+          // Handle permission denial
+          console.log("Camera or microphone permission denied");
+        }
+      } catch (error) {
+        console.log("Error checking permissions:", error);
+      }
+    };
+    
     const takePicture = async () => {
         try {
           setimageData('');
