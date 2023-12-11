@@ -1,5 +1,5 @@
 import React,{useEffect, useRef,useState} from "react";
-import { ActivityIndicator,StyleSheet,TouchableOpacity,View,TextInput,PermissionsAndroid } from "react-native";
+import { ActivityIndicator,StyleSheet,TouchableOpacity,View } from "react-native";
 import { Image, Text } from "react-native-elements";
 import { Camera,useCameraDevice,useFrameProcessor } from "react-native-vision-camera";
 import RNFS from "react-native-fs";
@@ -25,7 +25,6 @@ const CameraComponent=()=>{
         const newMicrophonePermission = await Camera.requestMicrophonePermission();
     
         if (!newCameraPermission || !newMicrophonePermission) {
-          // Handle permission denial
           console.log("Camera or microphone permission denied");
         }
       } catch (error) {
