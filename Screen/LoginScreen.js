@@ -68,11 +68,11 @@ const LoginScreen = ({navigation}) => {
         navigation.replace('DrawerNavigationRoutes');
         console.log(responseJson.users.usm_emp_id.emp_fname_en);
       } else if(responseJson.ERROR=="Wrong Password"){
-        Toast.warn('Username or password is wrong!!!');
+        alert('Username or password is wrong!!!');
       }
     } catch (error) {
       setLoading(false);
-      Toast.warn('Somthing Went wrong!!!');
+      alert('Something Went wrong!!!');
     }
   };
   

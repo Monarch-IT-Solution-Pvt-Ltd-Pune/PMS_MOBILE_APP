@@ -160,7 +160,7 @@ const SalarySlip = () => {
       {showWebView ? (
         <WebView
           source={{
-            uri: `http://115.247.52.108:8080/PMS_UAT/employeePayslipMobile?tbd_code=3&salYear=${value}&salMonth=${value1}&billTypeKey=${value2}&empId=${empId}`
+            uri: `http://103.249.97.144/employeePayslipMobile?tbd_code=${billNo}&salYear=${value}&salMonth=${value1}&billTypeKey=${value2}&empId=${empId}`
           }}
           style={styles.webview}
         />

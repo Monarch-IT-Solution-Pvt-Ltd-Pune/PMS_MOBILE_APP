@@ -22,13 +22,11 @@ const FancyCard=({ item ,index })=>{
   }
   return (
     
-    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.outBorder}>
-    
-      <TouchableOpacity style={[
-          styles.cardContainer,
-          { borderRightWidth: index === item - 1 ? 1 : 1 }
-        ]} onPress={()=>handleOnpress(item.url)}>
+    <ScrollView horizontal showsHorizontalScrollIndicator={false}  style={styles.pageContainer}>
+     
+      <TouchableOpacity style={styles.cardContainer} onPress={()=>handleOnpress(item.url)}>
         <Image source={item.src} style={styles.cardImage} />
+        <View style={styles.borderAfterImage} />
         <View style={styles.cardTextContainer}>
           <Text style={styles.cardText}>{item.text}</Text>
         </View>
@@ -41,45 +39,43 @@ const FancyCard=({ item ,index })=>{
 
 const styles = StyleSheet.create({
   outBorder:{
-    margin:0,
+    margin:10,
   },
+ 
   pageContainer: {
-    //flex: 1,
-    borderWidth: 1,  // Add border to the entire page
-    borderColor: 'black',
-    marginTop:100,
-    padding: 10,
+    marginTop:5,
   },
   cardContainer: {
-    flex: 1,
-    margin: 0,
-   // marginBottom: 0, // Set marginBottom to 0 to remove space between cards
-    //marginRight:  0,  // Set marginRight to 0 to remove space between near two cards in one row
-    //marginTop: 0, 
-    //marginLeft: 0, 
+    margin: 5,
     backgroundColor: 'white',
-    //borderRadius: 10,
-    elevation: 3,
+    borderRadius: 10,
     shadowColor: 'rgba(0,0,0,0)',
-    //shadowOffset: { width: 0, height: 2 },
-   // shadowOpacity: 0.8,
-   // shadowRadius: 2,
-    width:114,
-    height:120,
-    borderRightColor: 'black',
-    borderRightWidth: 1, // Add border to the right
-    paddingTop:10,
-    borderRadius:10,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    width:'300',
+    height:'230',
+    paddingTop:15,
+    marginBottom:0,
+    padding:18,
+    
   },
   cardImage: {
-    width: '46%',  // Adjust the width percentage as needed
-    height: 55,    // Adjust the height as needed
+    width: '60%',  // Adjust the width percentage as needed
+    height: '20%',    // Adjust the height as needed
     alignSelf: 'center',  // Center the image
-    //borderTopLeftRadius: 10,
-    //borderTopRightRadius: 10,
-    margin:5,
-    marginTop:5,
+    marginTop:15,
+    marginBottom:10,
+    marginRight:  10,
+    marginLeft: 10, 
     padding:30,
+  },
+  
+  borderAfterImage: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    width: '100%', // Set the width to 100% to cover the entire width of the card
+    marginBottom: 10, // Adjust the margin as needed
   },
   cardTextContainer: {
    
@@ -89,6 +85,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color:'black',
     alignSelf: 'center',
+  
   },
 });
 
