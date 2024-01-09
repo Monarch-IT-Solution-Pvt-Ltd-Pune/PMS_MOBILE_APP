@@ -41,6 +41,8 @@ const LeaveForm = ({navigation}) => {
         presentationStyle: 'fullScreen',
       });
       setSelectedDocument(response);
+      console.log(response);
+      console.log(selectedDocument);
     } catch (err) {
       console.warn(err);
     }
@@ -62,7 +64,7 @@ const LeaveForm = ({navigation}) => {
       const responseJson = await response.json();
       console.log(responseJson);
       if (responseJson.msg == 'ERROR') {
-        Toast.warn('No Leaves available');
+        console.error('No Leaves available');
         setValue1('');
       } else {
         setItems(responseJson.leaveTypeLst);
@@ -75,18 +77,25 @@ const LeaveForm = ({navigation}) => {
   const handleSubmitPress = async() => {
     const empId = await AsyncStorage.getItem('empId');
     console.log(selectedDocument.name);
-    const dataToSend = {
-      empId: empId,
-      tldMltId: value1,
-      tld_leave_from_date: fromDate,
-      tld_leave_to_date: toDate,
-      appliedLeaveCount: leaveCount,
-    };
+    const dataToSend = new FormData();
+    dataToSend.append('empId', empId);
+    dataToSend.append('tldMltId', value1);
+    dataToSend.append('tld_leave_from_date', fromDate);
+    dataToSend.append('tld_leave_to_date', toDate);
+    dataToSend.append('appliedLeaveCount', leaveCount);
+
+    if (selectedDocument) {
+        dataToSend.append('file_upload', {
+            uri: selectedDocument[0].uri,
+            type: selectedDocument[0].type,
+            name: selectedDocument[0].name,
+        });
+    }
     const response = await fetch(baseurl + '/applyForLeave', {
       method: 'POST',
-      body: JSON.stringify(dataToSend),
+      body: dataToSend,
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
       },
     });
 

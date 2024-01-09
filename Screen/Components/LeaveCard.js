@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity,ScrollView,Modal } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity,ScrollView,Modal,Image } from 'react-native';
 import baseurl from '../BaseUrl/Baseurl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ToastManager, { Toast } from 'toastify-react-native';
 
-const LeaveCard = ({ tldId,employeeCode,employeeName, leaveType, fromDate, toDate, appliedLeaveCount, }) => {
+const LeaveCard = ({ tldId,employeeCode,employeeName, leaveType, fromDate, toDate, appliedLeaveCount,attachPath }) => {
     
   const [hodRemark,setHodRemark]=useState('');
   const [userId,setUserId]=useState('');
   const [viewDocument, setViewDocument] = useState(false);
-
   useEffect(() => {
     fetchUserDetails()
   }, []);
@@ -116,13 +115,22 @@ const LeaveCard = ({ tldId,employeeCode,employeeName, leaveType, fromDate, toDat
 
       <Modal visible={viewDocument} transparent animationType="slide">
         <View style={styles.modalContainer}>
-          {/* <PDFView
-            fadeInDuration={250.0}
-            style={{ flex: 1 }}
-            resource={selectedDocument.uri}
-            resourceType={'url'}
-            onLoad={() => console.log(`PDF rendered from ${selectedDocument.uri}`)}
-            onError={(error) => console.log('Cannot render PDF', error)}
+        {/* <Pdf
+          source={{ uri: attachPath, cache: true }}
+          onLoadComplete={(numberOfPages, filePath) => {
+            console.log(`Number of pages: ${numberOfPages}`);
+          }}
+          onPageChanged={(page, numberOfPages) => {
+            console.log(`Current page: ${page}`);
+          }}
+          onError={(error) => {
+            console.log(`Error: ${error}`);
+          }}
+        /> */}
+          {/* <Text style={styles.text}>{attachPath}</Text>
+         <Image
+            style={styles.tinyLogo}
+            source={{uri:'file:///home/document/PMS/IMG-20240104-WA0001.jpg'}}
           /> */}
           <TouchableOpacity
             style={styles.closeButton}

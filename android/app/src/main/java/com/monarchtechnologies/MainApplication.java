@@ -1,4 +1,4 @@
-package com.pms;
+package com.monarchtechnologies;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

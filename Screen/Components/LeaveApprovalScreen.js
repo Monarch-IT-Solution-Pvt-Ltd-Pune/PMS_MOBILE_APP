@@ -65,6 +65,7 @@ const LeaveApprovalScreen = () => {
           fromDate={leaveEntry.fromDate} // Now, fromDate is already formatted
           toDate={leaveEntry.toDate} // Now, toDate is already formatted
           appliedLeaveCount={leaveEntry.tld_leave_count}
+          attachPath={leaveEntry.tld_application_aatchment_path}
         />
       ))}
     </View>
