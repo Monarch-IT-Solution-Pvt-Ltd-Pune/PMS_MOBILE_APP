@@ -3,12 +3,15 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity,ScrollView,Modal,Im
 import baseurl from '../BaseUrl/Baseurl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ToastManager, { Toast } from 'toastify-react-native';
+import { WebView } from 'react-native-webview';
 
 const LeaveCard = ({ tldId,employeeCode,employeeName, leaveType, fromDate, toDate, appliedLeaveCount,attachPath }) => {
     
   const [hodRemark,setHodRemark]=useState('');
   const [userId,setUserId]=useState('');
   const [viewDocument, setViewDocument] = useState(false);
+  const [documentUrl, setDocumentUrl] = useState(null);
+
   useEffect(() => {
     fetchUserDetails()
   }, []);
@@ -16,6 +19,33 @@ const LeaveCard = ({ tldId,employeeCode,employeeName, leaveType, fromDate, toDat
     const userId = await AsyncStorage.getItem('userId');
     setUserId(userId);
   }
+
+  const showDocument = async (tldId) => {
+    try {
+      setViewDocument(true);
+      const response = await fetch(
+        baseurl + `/viewLeaveAttachment?tldId=${tldId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const responseJson = await response.json();
+      if (responseJson.status) {
+        const documentUrl = attachPath;
+        setDocumentUrl(documentUrl);
+      }
+     } catch (error) {
+       console.error('An error occurred:', error);
+     }
+  };
 
   const onApprove = async (tldId, remark) => {
     try {
@@ -67,81 +97,70 @@ const LeaveCard = ({ tldId,employeeCode,employeeName, leaveType, fromDate, toDat
   
   return (
     <ScrollView>
-    <ToastManager />
-    <View style={styles.card}>
-      <Text style={styles.label}>Employee Code:</Text>
-      <Text style={styles.text}>{employeeCode}</Text>
+      <ToastManager />
+      <View style={styles.card}>
+        <Text style={styles.label}>Employee Code:</Text>
+        <Text style={styles.text}>{employeeCode}</Text>
 
-      <Text style={styles.label}>Employee Name:</Text>
-      <Text style={styles.text}>{employeeName}</Text>
+        <Text style={styles.label}>Employee Name:</Text>
+        <Text style={styles.text}>{employeeName}</Text>
 
-      <Text style={styles.label}>Leave Type:</Text>
-      <Text style={styles.text}>{leaveType}</Text>
+        <Text style={styles.label}>Leave Type:</Text>
+        <Text style={styles.text}>{leaveType}</Text>
 
-      <Text style={styles.label}>From Date:</Text>
-      <Text style={styles.text}>{fromDate}</Text>
+        <Text style={styles.label}>From Date:</Text>
+        <Text style={styles.text}>{fromDate}</Text>
 
-      <Text style={styles.label}>To Date:</Text>
-      <Text style={styles.text}>{toDate}</Text>
+        <Text style={styles.label}>To Date:</Text>
+        <Text style={styles.text}>{toDate}</Text>
 
-      <Text style={styles.label}>Applied Leave Count:</Text>
-      <Text style={styles.text}>{appliedLeaveCount}</Text>
+        <Text style={styles.label}>Applied Leave Count:</Text>
+        <Text style={styles.text}>{appliedLeaveCount}</Text>
 
-      <Text style={styles.label}>HOD Remark:</Text>
-      <TextInput
-       style={styles.input}
-        multiline
-        value={hodRemark}
-        placeholder="Enter HOD Remark"
-        onChangeText={(text) => setHodRemark(text)}
-      />
+        <Text style={styles.label}>HOD Remark:</Text>
+        <TextInput
+          style={styles.input}
+          multiline
+          value={hodRemark}
+          placeholder="Enter HOD Remark"
+          onChangeText={text => setHodRemark(text)}
+        />
 
-      <TouchableOpacity
-        style={styles.viewDocumentButton}
-        onPress={() => setViewDocument(true)}
-        activeOpacity={0.7}>
-        <Text style={styles.viewDocumentButtonText}>View Document</Text>
-      </TouchableOpacity>
-
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.approveButton} onPress={() => onApprove(tldId, hodRemark)}>
-          <Text style={styles.buttonText}>Approve</Text>
+        <TouchableOpacity
+          style={styles.viewDocumentButton}
+          onPress={() => showDocument(tldId)}
+          activeOpacity={0.7}>
+          <Text style={styles.viewDocumentButtonText}>View Document</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.rejectButton} onPress={() => onReject(tldId, hodRemark)}>
-          <Text style={styles.buttonText}>Reject</Text>
-        </TouchableOpacity>
-      </View>
-
-      <Modal visible={viewDocument} transparent animationType="slide">
-        <View style={styles.modalContainer}>
-        {/* <Pdf
-          source={{ uri: attachPath, cache: true }}
-          onLoadComplete={(numberOfPages, filePath) => {
-            console.log(`Number of pages: ${numberOfPages}`);
-          }}
-          onPageChanged={(page, numberOfPages) => {
-            console.log(`Current page: ${page}`);
-          }}
-          onError={(error) => {
-            console.log(`Error: ${error}`);
-          }}
-        /> */}
-          {/* <Text style={styles.text}>{attachPath}</Text>
-         <Image
-            style={styles.tinyLogo}
-            source={{uri:'file:///home/document/PMS/IMG-20240104-WA0001.jpg'}}
-          /> */}
+        <View style={styles.buttonContainer}>
           <TouchableOpacity
-            style={styles.closeButton}
-            onPress={() => setViewDocument(false)}>
+            style={styles.approveButton}
+            onPress={() => onApprove(tldId, hodRemark)}>
+            <Text style={styles.buttonText}>Approve</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.rejectButton}
+            onPress={() => onReject(tldId, hodRemark)}>
+            <Text style={styles.buttonText}>Reject</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Modal visible={viewDocument} transparent animationType="slide">
+        <View style={styles.modalContainer}>
+          {documentUrl && (
+            <WebView
+            source={{html: `<iframe width="100%" height="50%" src="${baseurl}/viewLeaveAttachment?tld_id=${tldId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`}}
+            style={{marginTop: 20}}
+         />
+          )}
+          <TouchableOpacity style={styles.closeButton} onPress={() => setViewDocument(false)}>
             <Text style={styles.closeButtonText}>Close</Text>
           </TouchableOpacity>
         </View>
       </Modal>
-
-
-    </View>
+      </View>
     </ScrollView>
   );
 };

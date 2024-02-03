@@ -29,18 +29,18 @@ const HomeScreen = () => {
       text: 'Compliance',
       url: 'COMPLIANCE', // Corrected the typo in "Compliance"
     },
-    {
-      id: 5,
-      src: require('../Images/verify.png'), // Remove "require" here
-      text: 'Verify Face',
-      url: 'VERIFYFACE', // Corrected the typo in "Compliance"
-    },
-    {
-      id: 6,
-      src: require('../Images/form.png'), // Remove "require" here
-      text: 'Form 16',
-      url: 'Form16', // Corrected the typo in "Compliance"
-    },
+    //  {
+    //   id: 5,
+    //   src: require('../Images/form.png'),
+    //   text: 'Form 16',
+    //   url: 'Form16',
+    // },
+    // {
+    //   id: 5,
+    //   src: require('../Images/verify.png'),
+    //   text: 'Verify Face',
+    //   url: 'VERIFYFACE',
+    // },
   ];
 
   useEffect(() => {}, []);

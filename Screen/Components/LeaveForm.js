@@ -28,6 +28,7 @@ const LeaveForm = ({navigation}) => {
   const [value1, setValue1] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [balanceLeave, setBalanceLeave] = useState('');
+  const [hiddenLeave, setHiddenLeave] = useState('');
   const [leaveCount, setLeaveCount] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -116,37 +117,46 @@ const LeaveForm = ({navigation}) => {
   };
 
   const fetchBalanceLeaves = async (leaveId) => {
-    try {
-      const empId = await AsyncStorage.getItem('empId');
-      console.log('empId' + empId + 'leaveId' + leaveId);
-      setLoading(true);
-      const response = await fetch(
-        baseurl + `/fetchBalanceLeaveByLeaveType/?leaveId=${leaveId}&empId=${empId}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+      if(leaveId==1||leaveId==2||leaveId==3){
+        try {
+          const empId = await AsyncStorage.getItem('empId');
+          console.log('empId' + empId + 'leaveId' + leaveId);
+          setLoading(true);
+          const response = await fetch(
+            baseurl + `/fetchBalanceLeaveByLeaveType/?leaveId=${leaveId}&empId=${empId}`,
+            {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          const responseJson = await response.json();
+          setLoading(false);
+          console.log(responseJson);
+          if(responseJson.msg=='ERROR'){
+            alert('No Leave available of this type');
+            setValue1('');
+            setBalanceLeave(0);
+          }else{
+            setBalanceLeave(responseJson.balanceLeave);
+            setHiddenLeave(responseJson.balanceLeave);
+            setFromDate("");  
+            setToDate("");  
+            setLeaveCount("");
+            setRemark("");
+          }
+        } catch (error) {
+          console.error('An error occurred:', error);
         }
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const responseJson = await response.json();
-      setLoading(false);
-      console.log(responseJson);
-      if(responseJson.msg=='ERROR'){
-        alert('No Leave available of this type');
-        setValue1('');
-        setBalanceLeave(0);
       }else{
-        setBalanceLeave(responseJson.balanceLeave);
-      }
-    } catch (error) {
-      console.error('An error occurred:', error);
-    }
+        setBalanceLeave(0);
+      } 
   };
 
   const [showFromDatePicker, setShowFromDatePicker] = useState(false);
@@ -173,17 +183,29 @@ const LeaveForm = ({navigation}) => {
       return;
     }
     const totalDaysDifference = calculateDateDifference(formattedDate, toDate)+1;
+    if(value1==1||value1==2||value1==3){
     if (totalDaysDifference > balanceLeave) {
-      alert('You cant apply for more than the balance');
-      setFromDate("");
+        alert('You cant apply for more than the balance');
+        setFromDate("");     
     } else {
       if(totalDaysDifference!=null){
         if(!isNaN(totalDaysDifference)){
-          setBalanceLeave(balanceLeave - totalDaysDifference);
-          setLeaveCount(totalDaysDifference.toString());
+          if(leaveCount!=""){
+            setBalanceLeave(balanceLeave - totalDaysDifference);
+            setLeaveCount(totalDaysDifference.toString());
+          }else{
+            setLeaveCount(hiddenLeave);
+          }
         }
       }
     }
+  }else{
+    if(leaveCount!=""){
+      setLeaveCount(totalDaysDifference.toString());
+    }else{
+      setLeaveCount(hiddenLeave);
+    }
+  }
   };
 
   const handleToDateChange = (event, selectedDate) => {
@@ -194,20 +216,32 @@ const LeaveForm = ({navigation}) => {
     }
     setShowToDatePicker(false);
     if (fromDate && fromDate > formattedDate) {
-      alert('To Date cannot be greater than From Date');
-      setToDate(""); // Reset From Date
-      return;
+        alert('To Date cannot be greater than From Date');
+        setToDate(""); // Reset From Date
+        return;
     }
     const totalDaysDifference = calculateDateDifference(fromDate, formattedDate)+1;
+    if(value1==1||value1==2||value1==3){
     if (totalDaysDifference > balanceLeave) {
-      alert('You cant apply for more than the balance');
-      setToDate("");
-    } else {
-      if(totalDaysDifference!=null){
-        if(!isNaN(totalDaysDifference)){
-          setBalanceLeave(balanceLeave - totalDaysDifference);
-          setLeaveCount(totalDaysDifference.toString());
+        alert('You cant apply for more than the balance');
+        setToDate("");
+    }else {
+        if(totalDaysDifference!=null){
+          if(!isNaN(totalDaysDifference)){
+            if(leaveCount!=""){
+              setBalanceLeave(balanceLeave - totalDaysDifference);
+              setLeaveCount(totalDaysDifference.toString());
+            }else{
+              setLeaveCount(hiddenLeave);
+            }
+          }  
         }
+      }
+    }else{
+      if(leaveCount!=""){
+        setLeaveCount(totalDaysDifference.toString());
+      }else{
+        setLeaveCount(hiddenLeave);
       }
     }
   };
