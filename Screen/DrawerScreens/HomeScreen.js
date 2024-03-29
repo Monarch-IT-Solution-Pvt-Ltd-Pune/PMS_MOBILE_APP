@@ -13,21 +13,21 @@ const HomeScreen = () => {
     },
     {
       id: 2,
-      src: require('../Images/SalarySlip1.png'), // Remove "require" here
+      src: require('../Images/SalarySlip1.png'),
       text: 'Salary Slip',
       url: 'SLIP',
     },
     {
       id: 3,
-      src: require('../Images/Empleave.png'), // Remove "require" here
+      src: require('../Images/Empleave.png'),
       text: 'Leave Application',
       url: 'LEAVE',
     },
     {
       id: 4,
-      src: require('../Images/comp.png'), // Remove "require" here
+      src: require('../Images/comp.png'),
       text: 'Compliance',
-      url: 'COMPLIANCE', // Corrected the typo in "Compliance"
+      url: 'COMPLIANCE',
     },
     //  {
     //   id: 5,

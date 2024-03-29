@@ -8,7 +8,7 @@ import {
   Image,
   Keyboard,
   TouchableOpacity,
-  KeyboardAvoidingView,
+  KeyboardAvoidingView
 } from 'react-native';
 import Loader from './Components/Loader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -62,12 +62,12 @@ const LoginScreen = ({navigation}) => {
       if (responseJson.SUCCESS=="SUCCESS") {
         console.log(responseJson.users.id.toString());
         AsyncStorage.setItem("userId",responseJson.users.id.toString());
-        AsyncStorage.setItem("roleId",responseJson.users.usmRomId.romId.toString());
+        AsyncStorage.setItem("roleId",responseJson.roleId.toString());
         AsyncStorage.setItem("empId",responseJson.users.usm_emp_id.emp_id.toString());
         AsyncStorage.setItem("empName",responseJson.users.usm_emp_id.emp_fname_en+" "+responseJson.users.usm_emp_id.emp_lname_en);
         navigation.replace('DrawerNavigationRoutes');
         console.log(responseJson.users.usm_emp_id.emp_fname_en);
-      } else if(responseJson.ERROR=="Wrong Password"){
+      } else{
         alert('Username or password is wrong!!!');
       }
     } catch (error) {

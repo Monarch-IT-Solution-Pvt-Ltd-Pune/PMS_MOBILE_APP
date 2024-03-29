@@ -126,12 +126,12 @@ const LeaveCard = ({ tldId,employeeCode,employeeName, leaveType, fromDate, toDat
           onChangeText={text => setHodRemark(text)}
         />
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.viewDocumentButton}
           onPress={() => showDocument(tldId)}
           activeOpacity={0.7}>
           <Text style={styles.viewDocumentButtonText}>View Document</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -147,19 +147,21 @@ const LeaveCard = ({ tldId,employeeCode,employeeName, leaveType, fromDate, toDat
           </TouchableOpacity>
         </View>
 
-        <Modal visible={viewDocument} transparent animationType="slide">
+      {/* <Modal visible={viewDocument} transparent animationType="slide">
         <View style={styles.modalContainer}>
           {documentUrl && (
             <WebView
-            source={{html: `<iframe width="100%" height="50%" src="${baseurl}/viewLeaveAttachment?tld_id=${tldId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`}}
-            style={{marginTop: 20}}
-         />
+            source={{
+              uri: `http://103.249.97.144:2926/api/rest-services/viewLeaveAttachment?tld_id=654924`
+            }}
+            style={styles.webview}
+          />
           )}
           <TouchableOpacity style={styles.closeButton} onPress={() => setViewDocument(false)}>
             <Text style={styles.closeButtonText}>Close</Text>
           </TouchableOpacity>
         </View>
-      </Modal>
+      </Modal> */}
       </View>
     </ScrollView>
   );
